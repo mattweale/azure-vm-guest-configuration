@@ -1,0 +1,1 @@
+# azure-vm-guest-configuration
