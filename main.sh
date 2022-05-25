@@ -1,4 +1,4 @@
 #!/bin/sh
 
-./ubuntu_update.sh
-./mount_data_drive.sh
+sudo ./ubuntu_update.sh
+sudo ./mount_data_drive.sh
