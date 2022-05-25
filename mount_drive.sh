@@ -4,6 +4,6 @@ sudo mkfs.xfs /dev/sdb1
 sudo partprobe /dev/sdb1 
 sudo mkdir /datadrive # end making partions
 sudo mount /dev/sdb1 /datadrive #not permanent use fstab
-sudo yum -y install util-linux
+sudo apt install nfs-common
 sudo fstrim /datadrive
 sudo chown -R `whoami` /datadrive
