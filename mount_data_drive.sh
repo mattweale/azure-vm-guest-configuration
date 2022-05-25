@@ -6,4 +6,5 @@ sudo mkdir /datadrive # end making partions
 sudo mount /dev/sdb1 /datadrive #not permanent use fstab
 sudo apt install nfs-common -y
 sudo fstrim /datadrive
-sudo chown -R `whoami` /datadrive
+sudo chown -R adminuser /datadrive
+sudo chgrp -R adminuser /datadrive
