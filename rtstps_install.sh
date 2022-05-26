@@ -31,14 +31,12 @@ else
 	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
 
 	export SOURCE_DIR=/datadrive
-	sudo chown -R adminuser /datadrive
-	sudo chgrp -R adminuser /datadrive
 	
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "$RTSTPS_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "$RTSTPS_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$RTSTPS_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "$RTSTPS_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "$RTSTPS_DIR"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Could you this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
@@ -48,6 +46,7 @@ else
 	tar -xzvf RT-STPS_6.0.tar.gz
 	cd rt-stps/
 	./install.sh
+	
 # 	Install patches
 	cd $SOURCE_DIR
 	tar -xzvf RT-STPS_6.0_PATCH_1.tar.gz 
