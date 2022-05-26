@@ -46,14 +46,12 @@ else
 	tar -xzvf RT-STPS_6.0.tar.gz
 	cd rt-stps/
 	./install.sh
-	
 # 	Install patches
-	cd $SOURCE_DIR
 	tar -xzvf RT-STPS_6.0_PATCH_1.tar.gz 
 	tar -xzvf RT-STPS_6.0_PATCH_2.tar.gz 
 	tar -xzvf RT-STPS_6.0_PATCH_3.tar.gz
 	cd rt-stps/
-	./install.sh
+cd
 
 
 # 	Update leadsec file
