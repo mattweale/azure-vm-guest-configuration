@@ -37,6 +37,7 @@ else
 	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	sudo azcopy cp "${CONTAINER}test2.bin${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Could you this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
