@@ -18,27 +18,30 @@ else
 	export NOW=$(date '+%Y%m%d-%H:%M:%S')
 	echo "$NOW	RT-STPS Prerequisites"
 	
-	sudo yum upgrade -y 
-	sudo yum install -y java-11-openjdk-devel
+	##sudo yum upgrade -y 
+	#sudo yum install -y java-11-openjdk-devel
+	sudo apt-get install openjdk-11-jdk -y
+
+
 
 	#   Set JAVA Environment Variables
 	export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 	export PATH=$PATH:$JAVA_HOME/bin
 
 	#   Download RT_STPS Software and Test Data
-	export CONTAINER='https://samrw.blob.core.windows.net/sharing/NASA%20DRL/RT-STPS/'
+	export CONTAINER='https://samrw.blob.core.windows.net/sharing/nasa_drl/RT-STPS/'
 	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
-		
-	curl "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" > "RT-STPS_6.0.tar.gz"
-	curl "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" > "RT-STPS_6.0_PATCH_1.tar.gz"
-	curl "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" > "RT-STPS_6.0_PATCH_2.tar.gz"
-	curl "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" > "RT-STPS_6.0_PATCH_3.tar.gz"
-	curl "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" > "RT-STPS_6.0_testdata.tar.gz"
+
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "./"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "./"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "./"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "./"
+	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "./"
 	
 	cd ~
 	mkdir data
 	cd data
-	curl "${CONTAINER}test2.bin${SAS_TOKEN}" > "test2.bin"
+	sudo azcopy cp "${CONTAINER}test2.bin${SAS_TOKEN}" "./"
 
 	#   Install RT_STPS Software  
 	export NOW=$(date '+%Y%m%d-%H:%M:%S')
@@ -65,7 +68,6 @@ else
 fi
 
 # Install XRDP Server
-sudo yum install -y epel-release
 sudo yum groupinstall -y "Server with GUI"
 sudo yum groupinstall -y "Xfce"
 sudo yum install -y tigervnc-server xrdp
