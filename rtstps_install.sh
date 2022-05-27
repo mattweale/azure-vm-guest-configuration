@@ -4,6 +4,9 @@
 #	RT-STPS Install
 #	=============================
 
+# Update OS
+sudo yum upgrade -y 
+
 #   Install az copy
 cd ~
 curl "https://azcopyvnext.azureedge.net/release20220315/azcopy_linux_amd64_10.14.1.tar.gz" > azcopy_linux_amd64_10.14.1.tar.gz
@@ -19,7 +22,6 @@ else
 	echo "$NOW	RT-STPS Prerequisites"
 	
 #	Install JDK
-	sudo yum upgrade -y 
 	sudo yum install -y java-11-openjdk-devel
 	
 #   Set JAVA Environment Variables
