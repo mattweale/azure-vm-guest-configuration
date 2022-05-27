@@ -33,9 +33,9 @@ rm -r ./azcopy_linux_amd64_*/azcopy
 
 # Install XRDP Server
 sudo yum install -y epel-release
-#sudo yum groupinstall -y "Server with GUI"
-#sudo yum groupinstall -y "Xfce"
-sudo yum install -y tigervnc-server xrdp
+sudo yum groupinstall -y "Server with GUI"
+sudo yum groupinstall -y "Gnome Desktop"
+sudo yum install -y tigervnc-server xrdp	
 sudo systemctl enable xrdp.service
 sudo systemctl start xrdp.service
 sudo systemctl set-default graphical.target
