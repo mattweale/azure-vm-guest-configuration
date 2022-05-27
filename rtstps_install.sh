@@ -58,8 +58,7 @@ else
 
 
 # 	Update leadsec file
-	cd ~
-	cd ~/rt-stps
+	cd /datadrive/rt-stps
 	./bin/internal/update_leapsec.sh
 
 fi
