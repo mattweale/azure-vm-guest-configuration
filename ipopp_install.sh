@@ -49,18 +49,22 @@ else
 #   Download IPOPP Software and Patch. Hard coded Containers and SAS Token
 	export CONTAINER='https://samrw.blob.core.windows.net/sharing/nasa_drl/IPOPP/'
 	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
+	export IPOPP_TAR_GZ_FILENAME='DRL-IPOPP_4.1.tar.gz'
+	export PATCH_FILE_NAME='DRL-IPOPP_4.1_PATCH_1.tar.gz'
 	export SOURCE_DIR=/datadrive
+	export HOME=/datadrive
+	export INSTALL_DIR=/datadrive # Change destination based on mount location
 	
-	azcopy cp "${CONTAINER}DRL-IPOPP_4.1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}${IPOPP_TAR_GZ_FILENAME}${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}${IPOPP_TAR_GZ_FILENAME}${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Could use this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
 
 # 	Install ipopp
-	export HOME=/datadrive
-	cd $INSTALL_DIR
-	su -c 'tar -C $INSTALL_DIR -xzf $IPOPP_TAR_GZ_FILENAME' adminuser
+	cd $HOME
+	tar -C $INSTALL_DIR -xzf $IPOPP_TAR_GZ_FILENAME
+	chmod -R 755 IPOPP
 	./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
 
 # 	Add SQL Path for Patch Installation DB Check
