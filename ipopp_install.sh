@@ -20,14 +20,12 @@ else
 #echo 'Enter SAS Token for Container:'
 #read SAS_TOKEN
 
-#	 Update OS
-sudo yum upgrade -y 
-
 #   Install az copy
-cd ~
-curl "https://azcopyvnext.azureedge.net/release20220315/azcopy_linux_amd64_10.14.1.tar.gz" > azcopy_linux_amd64_10.14.1.tar.gz
-tar -xvf azcopy_linux_amd64_10.14.1.tar.gz
-cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+	cd ~
+	curl "https://azcopyvnext.azureedge.net/release20220315/azcopy_linux_amd64_10.14.1.tar.gz" > azcopy_linux_amd64_10.14.1.tar.gz
+	tar -xvf azcopy_linux_amd64_10.14.1.tar.gz
+	sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+	sudo chmod 755 /usr/bin/azcopy
 
 #	Apply Udates
 	sudo yum upgrade -y 
@@ -48,40 +46,37 @@ cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
 #sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
 #sudo chown -R `whoami` /nfsdata
 
-export INSTALL_DIR=/datadrive # Change destination based on mount location
-export IPOPP_TAR_GZ_FILENAME=DRL-IPOPP_4.1.tar.gz
-export PATCH_FILE_NAME=DRL-IPOPP_4.1_PATCH_1.tar.gz # Download from nasa DRL
-# download the ipopp installation tar.gz file from the azure storage account
-
 #   Download IPOPP Software and Patch. Hard coded Containers and SAS Token
-export CONTAINER='https://samrw.blob.core.windows.net/ipopp/'
-export SAS_TOKEN='sp=racwl&st=2022-04-28T12:33:33Z&se=2023-04-28T20:33:33Z&spr=https&sv=2020-08-04&sr=c&sig=ir5zUR9o7QtijQJqu54iekLJDxNWNRkB2rAgqapT%2FRQ%3D'
+	export CONTAINER='https://samrw.blob.core.windows.net/sharing/nasa_drl/IPOPP/'
+	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
+	export SOURCE_DIR=/datadrive
+	
+	azcopy cp "${CONTAINER}DRL-IPOPP_4.1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
-echo 'Downloading DRL-IPOPP_4.1.tar.gz.......'
-azcopy cp "${CONTAINER}/${IPOPP_TAR_GZ_FILENAME}?${SAS_TOKEN}" "./${IPOPP_TAR_GZ_FILENAME}"
-echo 'Downloading DRL-IPOPP_4.1_PATCH_1.tar.gz.......'		
-azcopy cp "${CONTAINER}/${PATCH_FILE_NAME}?${SAS_TOKEN}" "./${PATCH_FILE_NAME}"
+#	Could use this but need to tidy up Container
+#	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
 
-# Install ipopp
-export HOME=/datadrive
-cd $INSTALL_DIR
-su -c 'tar -C $INSTALL_DIR -xzf $IPOPP_TAR_GZ_FILENAME' adminuser
-./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
+# 	Install ipopp
+	export HOME=/datadrive
+	cd $INSTALL_DIR
+	su -c 'tar -C $INSTALL_DIR -xzf $IPOPP_TAR_GZ_FILENAME' adminuser
+	./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
 
-# Add SQL Path for Patch Installation DB Check
-export PATH=$PATH:/home/adminuser/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/home/adminuser/drl/standalone/jdk1.8.0_45/bin
+# 	Add SQL Path for Patch Installation DB Check
+	export PATH=$PATH:/home/adminuser/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/home/adminuser/drl/standalone/jdk1.8.0_45/bin
 
 # Install IPOPP Patch
-sudo $INSTALL_DIR/drl/tools/install_patch.sh $PATCH_FILE_NAME
+	sudo $INSTALL_DIR/drl/tools/install_patch.sh $PATCH_FILE_NAME
 
 # Start Services
-/${INSTALL_DIR}/drl/tools/services.sh start
+	/${INSTALL_DIR}/drl/tools/services.sh start
 
 # Create .netrc file for MODIS Sensor geolocation module requires access to additional ephemeris and attitude ancillary files during processing. These files will be automatically retrieved using EarthData portal login credentials.
 
 ## Verify
-./$INSTALL_DIR/drl/tools/services.sh status > status.log
-./$INSTALL_DIR/drl/tools/spa_services.sh status >> status.log
+	./$INSTALL_DIR/drl/tools/services.sh status > status.log
+	./$INSTALL_DIR/drl/tools/spa_services.sh status >> status.log
 
 # cp $HOME/drl/SPA/modisl1db/algorithm/DRLshellscripts/sample.netrc $HOME/.netrc
 # Next edit the $HOME/.netrc file to replace “yourlogin” and “yourpassword” with your EarthData portal credentials.
