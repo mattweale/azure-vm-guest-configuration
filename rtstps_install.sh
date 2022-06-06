@@ -38,11 +38,10 @@ else
 	export PATH=$PATH:$JAVA_HOME/bin
 
 #   Download RT_STPS Software and Test Data
-	export CONTAINER='https://samrw.blob.core.windows.net/sharing/nasa_drl/RT-STPS/'
-	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
-
+	export CONTAINER='https://samrw.blob.core.windows.net/rt-stps/'
+	export SAS_TOKEN='?sp=rl&st=2022-06-06T18:11:00Z&se=2023-06-07T02:11:00Z&spr=https&sv=2021-06-08&sr=c&sig=9jcQ%2B7STJjGnoA8NGD1CVtBEDhLDCwm3XVFuE1mLsGk%3D'
 	export SOURCE_DIR=/datadrive
-	
+
 	azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
