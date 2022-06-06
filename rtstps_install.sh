@@ -4,14 +4,23 @@
 #	RT-STPS Install
 #	=============================
 
-# Update OS
-sudo yum upgrade -y 
-
 #   Install az copy
 cd ~
 curl "https://azcopyvnext.azureedge.net/release20220315/azcopy_linux_amd64_10.14.1.tar.gz" > azcopy_linux_amd64_10.14.1.tar.gz
 tar -xvf azcopy_linux_amd64_10.14.1.tar.gz
-sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+
+#	Apply Udates
+	sudo yum upgrade -y 
+	
+# 	Install XRDP Server
+	sudo yum install -y epel-release
+	sudo yum groupinstall -y "Server with GUI"
+	sudo yum groupinstall -y "Gnome Desktop"
+	sudo yum install -y tigervnc-server xrdp	
+	sudo systemctl enable xrdp.service
+	sudo systemctl start xrdp.service
+	sudo systemctl set-default graphical.target
 
 #	Check if RT-STPS is installed already
 if [ -d "/root/rt-stps" ]; then
@@ -34,22 +43,22 @@ else
 
 	export SOURCE_DIR=/datadrive
 	
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	sudo azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
-	sudo azcopy cp "${CONTAINER}test2.bin${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}RT-STPS_6.0.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}RT-STPS_6.0_PATCH_3.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}RT-STPS_6.0_testdata.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}test2.bin${SAS_TOKEN}" "$SOURCE_DIR"
 
-#	Could you this but need to tidy up Container
+#	Could use this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
 
 # 	Install RT-STPS
 	cd $SOURCE_DIR
-	tar -xzvf RT-STPS_6.0.tar.gz
+	su -c 'tar -xzvf RT-STPS_6.0.tar.gz' adminuser
 	cd rt-stps/
 	./install.sh
-	
+
 # 	Install patches
 	cd $SOURCE_DIR
 	tar -xzvf RT-STPS_6.0_PATCH_1.tar.gz 
@@ -58,25 +67,13 @@ else
 	sudo chown -R adminuser /datadrive
 	sudo chgrp -R adminuser /datadrive
 
-
 # 	Update leadsec file
 	cd /datadrive/rt-stps
 	./bin/internal/update_leapsec.sh
 
 fi
 
-# 	Install XRDP Server
-	sudo yum install -y epel-release
-	sudo yum groupinstall -y "Server with GUI"
-	sudo yum groupinstall -y "Gnome Desktop"
-	sudo yum install -y tigervnc-server xrdp	
-	sudo systemctl enable xrdp.service
-	sudo systemctl start xrdp.service
-	sudo systemctl set-default graphical.target
-
 # 	Echo how to start RT-STPS, Viewer and Sender
-	echo 'Starting RT-STPS Server........'
-	cd /datadrive
-	./rt-stps/jsw/bin/rt-stps-server.sh start'
+	echo 'Start RT-STPS Server with: ./rt-stps/jsw/bin/rt-stps-server.sh start'
 	echo 'Start Viewer with: ./rt-stps/bin/viewer.sh &'
 	echo 'Start Sender with: ./rt-stps/bin/sender.sh &'
