@@ -47,16 +47,12 @@ else
 #sudo chown -R `whoami` /nfsdata
 
 #   Download IPOPP Software and Patch. Hard coded Containers and SAS Token
-	export CONTAINER='https://samrw.blob.core.windows.net/sharing/nasa_drl/IPOPP/'
-	export SAS_TOKEN='?sp=r&st=2022-03-29T15:53:35Z&se=2023-03-29T23:53:35Z&spr=https&sv=2020-08-04&sr=c&sig=lxDbvzZCZ2DUkbrFEw%2B1nXPegTB9IMe5NDFDu1kmlMs%3D'
-	export IPOPP_TAR_GZ_FILENAME='DRL-IPOPP_4.1.tar.gz'
-	export PATCH_FILE_NAME='DRL-IPOPP_4.1_PATCH_1.tar.gz'
+	export CONTAINER='https://samrw.blob.core.windows.net/ipopp/'
+	export SAS_TOKEN='?sp=rl&st=2022-06-06T18:11:57Z&se=2023-06-07T02:11:57Z&spr=https&sv=2021-06-08&sr=c&sig=xPb9nAWP8Om2ony57uySwlfsmWxNCO7boKEtWYC8qqs%3D'
 	export SOURCE_DIR=/datadrive
-	export HOME=/datadrive
-	export INSTALL_DIR=/datadrive # Change destination based on mount location
-	
-	azcopy cp "${CONTAINER}${IPOPP_TAR_GZ_FILENAME}${SAS_TOKEN}" "$SOURCE_DIR"
-	azcopy cp "${CONTAINER}${IPOPP_TAR_GZ_FILENAME}${SAS_TOKEN}" "$SOURCE_DIR"
+
+	azcopy cp "${CONTAINER}DRL-IPOPP_4.1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Could use this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
@@ -70,19 +66,19 @@ else
 # 	Add SQL Path for Patch Installation DB Check
 	export PATH=$PATH:/home/adminuser/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/home/adminuser/drl/standalone/jdk1.8.0_45/bin
 
-# Install IPOPP Patch
+# 	Install IPOPP Patch
 	sudo $INSTALL_DIR/drl/tools/install_patch.sh $PATCH_FILE_NAME
 
-# Start Services
+# 	Start Services
 	/${INSTALL_DIR}/drl/tools/services.sh start
 
-# Create .netrc file for MODIS Sensor geolocation module requires access to additional ephemeris and attitude ancillary files during processing. These files will be automatically retrieved using EarthData portal login credentials.
+# 	Create .netrc file for MODIS Sensor geolocation module requires access to additional ephemeris and attitude ancillary files during processing. These files will be automatically retrieved using EarthData portal login credentials.
 
-## Verify
+## 	Verify
 	./$INSTALL_DIR/drl/tools/services.sh status > status.log
 	./$INSTALL_DIR/drl/tools/spa_services.sh status >> status.log
 
-# cp $HOME/drl/SPA/modisl1db/algorithm/DRLshellscripts/sample.netrc $HOME/.netrc
-# Next edit the $HOME/.netrc file to replace “yourlogin” and “yourpassword” with your EarthData portal credentials.
+# 	cp $HOME/drl/SPA/modisl1db/algorithm/DRLshellscripts/sample.netrc $HOME/.netrc
+# 	Next edit the $HOME/.netrc file to replace “yourlogin” and “yourpassword” with your EarthData portal credentials.
 
 fi
