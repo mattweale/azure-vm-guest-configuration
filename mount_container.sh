@@ -8,10 +8,10 @@
     source /etc/os-release
     if [ "$NAME" = "CentOS Linux" ]; then
 	    echo "Found RHEL Distro installing using yum"
-        sudo yum install nfs-utils -y
+        sudo yum install -y nfs-utils
     elif [ "$NAME" = "Ubuntu" ]; then
 	    echo "echo Found Ubuntu Distro installing using apt"
-        sudo apt install nfs-common -y
+        sudo apt install -y nfs-common
     else
         echo "What OS are you running!?"
     fi
