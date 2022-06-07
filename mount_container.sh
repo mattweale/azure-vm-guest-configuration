@@ -26,7 +26,7 @@
     elif [ "$HOSTNAME" = "vm-orbital-rtstps" ]; then
 	    echo "Found Data Collection VM mounting /saorbital/rt-stps"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/rt-stps  /nfsdata
-    elif [ "$HOSTNAME" = "vm-orbital-ipopp" ]; then
+    elif [ "$HOSTNAME" = "vm-orbital-ipopp" ];
 	    echo "Found Data Collection VM mounting /saorbital/ipopp"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
     else
