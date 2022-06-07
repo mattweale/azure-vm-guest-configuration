@@ -26,10 +26,10 @@
 	echo "Found Data Collection VM mounting /saorbital/shared-data"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     elif [ "$HOSTNAME" = "vm-orbital-rtstps" ]; then
-	echo "Found Data Collection VM mounting /saorbital/rt-stps"
+	echo "Found Data Collection VM mounting /saorbital/shared-data"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     elif [ "$HOSTNAME" = "vm-orbital-ipopp" ]; then
-	echo "Found Data Collection VM mounting /saorbital/ipopp"
+	echo "Found Data Collection VM mounting /saorbital/shared-data"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     else
     	echo "What VM is this!?"
