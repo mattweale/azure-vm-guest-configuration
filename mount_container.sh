@@ -16,19 +16,21 @@
         echo "What OS are you running!?"
     fi
 
-#   Check VM Role to mount right Container
+#   	Check VM Role to mount right Container
 
-    sudo mkdir -p /nfsdata
+    	sudo mkdir -p /nfsdata
+
+#	Mounting shared-data container on all VMs
 
     if [ "$HOSTNAME" = "vm-orbital-data-collection" ]; then
-	echo "Found Data Collection VM mounting /saorbital/raw-data"
-        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/raw-data  /nfsdata
+	echo "Found Data Collection VM mounting /saorbital/shared-data"
+        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     elif [ "$HOSTNAME" = "vm-orbital-rtstps" ]; then
 	echo "Found Data Collection VM mounting /saorbital/rt-stps"
-        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/rt-stps  /nfsdata
+        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     elif [ "$HOSTNAME" = "vm-orbital-ipopp" ]; then
 	echo "Found Data Collection VM mounting /saorbital/ipopp"
-        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
+        sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/shared-data  /nfsdata
     else
     	echo "What VM is this!?"
     fi
