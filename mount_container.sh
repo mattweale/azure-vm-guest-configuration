@@ -21,13 +21,13 @@
     sudo mkdir -p /nfsdata
 
     if [ "$HOSTNAME" = "vm-orbital-data-collection" ]; then
-	    echo "Found Data Collection VM mounting /saorbital/raw-data"
+	echo "Found Data Collection VM mounting /saorbital/raw-data"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/raw-data  /nfsdata
     elif [ "$HOSTNAME" = "vm-orbital-rtstps" ]; then
-	    echo "Found Data Collection VM mounting /saorbital/rt-stps"
+	echo "Found Data Collection VM mounting /saorbital/rt-stps"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/rt-stps  /nfsdata
-    elif [ "$HOSTNAME" = "vm-orbital-ipopp" ];
-	    echo "Found Data Collection VM mounting /saorbital/ipopp"
+    elif [ "$HOSTNAME" = "vm-orbital-ipopp" ]; then
+	echo "Found Data Collection VM mounting /saorbital/ipopp"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
     else
     	echo "What VM is this!?"
