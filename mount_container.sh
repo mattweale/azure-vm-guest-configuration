@@ -6,10 +6,10 @@
 
 #	Check Linux Distro for nfs utils install
     source /etc/os-release
-    if [ echo $NAME = "CentOS Linux" ]; then
+    if [echo $NAME="CentOS Linux" ]; then
 	    echo "Found RHEL Distro installing using yum"
         sudo yum install nfs-utils
-    else [ echo $NAME = "Ubuntu" ]; then
+    else [echo $NAME="Ubuntu"]; then
 	    echo "echo Found Ubuntu Distro installing using apt"
         sudo apt install nfs-common
     fi
