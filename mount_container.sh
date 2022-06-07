@@ -30,7 +30,7 @@
 	    echo "Found Data Collection VM mounting /saorbital/ipopp"
         sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
     else
-    #    echo "What VM is this!?"
+    	echo "What VM is this!?"
     fi
 
 sudo chmod -R 777 /nfsdata
