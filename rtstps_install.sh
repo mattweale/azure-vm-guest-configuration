@@ -76,6 +76,6 @@ fi
 # 	Echo how to start RT-STPS, Viewer and Sender
 	echo 'Start RT-STPS Server with: ./rt-stps/jsw/bin/rt-stps-server.sh start'
 	cd /datadrive
-	./rt-stps/jsw/bin/rt-stps-server.sh start'
+	./rt-stps/jsw/bin/rt-stps-server.sh start
 	echo 'Start Viewer with: ./rt-stps/bin/viewer.sh &'
 	echo 'Start Sender with: ./rt-stps/bin/sender.sh &'
