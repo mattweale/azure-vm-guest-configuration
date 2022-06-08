@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 source sudo ./mount_data_drive.sh
 source sudo ./mount_container.sh
