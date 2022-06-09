@@ -50,28 +50,34 @@ else
 	export CONTAINER='https://samrw.blob.core.windows.net/ipopp/'
 	export SAS_TOKEN='?sp=rl&st=2022-06-06T18:11:57Z&se=2023-06-07T02:11:57Z&spr=https&sv=2021-06-08&sr=c&sig=xPb9nAWP8Om2ony57uySwlfsmWxNCO7boKEtWYC8qqs%3D'
 	export SOURCE_DIR=/datadrive
-	export INSTALL_DIR=/datadrive
+	export INSTALL_DIR=/datadrive/ipopp
 	export IPOPP_TAR_GZ_FILENAME='DRL-IPOPP_4.1.tar.gz'
 	export PATCH_FILE_NAME='DRL-IPOPP_4.1_PATCH_1.tar.gz'
 
 	azcopy cp "${CONTAINER}DRL-IPOPP_4.1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
+	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Could use this but need to tidy up Container
 #	azcopy $RTSTPS_SOURCE $RTSTPS_DIR --recursive --overwrite --log-level=error
 
 # 	Install ipopp
 	cd $SOURCE_DIR
-	tar -C $INSTALL_DIR -xzf $IPOPP_TAR_GZ_FILENAME
+	tar -C $SOURCE_DIR -xzf $IPOPP_TAR_GZ_FILENAME
 	chmod -R 755 IPOPP
-	./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
+	su -c "./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest" -s /bin/bash adminuser
 
 # 	Add SQL Path for Patch Installation DB Check
 #	export PATH=$PATH:/home/adminuser/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/home/adminuser/drl/standalone/jdk1.8.0_45/bin
 	export PATH=$PATH:/datadrive/ipopp/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/datadrive/ipopp/drl/standalone/jdk1.8.0_45/bin
 
-# Install IPOPP Patch
-	sudo $INSTALL_DIR/drl/tools/install_patch.sh $PATCH_FILE_NAME
+# Install IPOPP Patch #1
+	cp $SOURCE_DIR/DRL-IPOPP_4.1_PATCH_1.tar.gz $INSTALL_DIR/drl
+	su -c "/datadrive/ipopp/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_1.tar.gz" -s /bin/bash adminuser
+
+# Install IPOPP Patch #2
+	cp $SOURCE_DIR/DRL-IPOPP_4.1_PATCH_2.tar.gz $INSTALL_DIR
+	su -c "/datadrive/ipopp/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_2.tar.gz" -s /bin/bash adminuser
 
 # Start Services
 	${INSTALL_DIR}/drl/tools/services.sh start
