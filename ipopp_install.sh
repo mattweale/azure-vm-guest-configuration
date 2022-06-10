@@ -59,10 +59,10 @@ else
 	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
 #	Prepare IPOPP Source for install
-	cd $SOURCE_DIR
-	sudo -u adminuser tar -C $SOURCE_DIR -xzf $IPOPP_TAR_GZ_FILENAME
-	sudo -u adminuser chmod -R 755 IPOPP
-	sudo -u adminuser ./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
+#	cd $SOURCE_DIR
+#   sudo -u adminuser tar -C $SOURCE_DIR -xzf $IPOPP_TAR_GZ_FILENAME
+#	sudo -u adminuser chmod -R 755 IPOPP
+#	sudo -u adminuser ./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
 
 #	runuser -u adminuser -- ./IPOPP/install_ipopp.sh -installdir $INSTALL_DIR/drl -datadir $INSTALL_DIR/data  -ingestdir $INSTALL_DIR/data/ingest
 
