@@ -10,19 +10,19 @@
 	export IPOPP_TAR_GZ_FILENAME='DRL-IPOPP_4.1.tar.gz'
 	export PATCH_FILE_NAME='DRL-IPOPP_4.1_PATCH_1.tar.gz'
 
-    cd $SOURCE_DIR
-    su -c "tar -C /datadrive -xzf DRL-IPOPP_4.1.tar.gz" -s /bin/bash adminuser
-    chmod -R 755 IPOPP
+    	cd $SOURCE_DIR
+    	tar -C /datadrive -xzf DRL-IPOPP_4.1.tar.gz
+    	chmod -R 755 IPOPP
 	sudo chown -R adminuser /datadrive
 	sudo chgrp -R adminuser /datadrive
-    su -c "./install_ipopp.sh" -s /bin/sh adminuser
+    	./install_ipopp.sh
 
 # 	Add SQL Path for Patch Installation DB Check
-    export PATH=$PATH:/datadrive/IPOPP/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/datadrive/IPOPP/drl/standalone/jdk1.8.0_45/bin
+    	export PATH=$PATH:/datadrive/IPOPP/drl/standalone/mariadb-10.1.8-linux-x86_64/bin:/datadrive/IPOPP/drl/standalone/jdk1.8.0_45/bin
 
 # Install IPOPP Patch #1
 #	cp $SOURCE_DIR/DRL-IPOPP_4.1_PATCH_1.tar.gz $INSTALL_DIR/drl
-     su -c "/datadrive/IPOPP/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_1.tar.gz" -s /bin/sh adminuser
+     	/datadrive/IPOPP/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_1.tar.gz" -s /bin/sh adminuser
 
 
 # Install IPOPP Patch #2
