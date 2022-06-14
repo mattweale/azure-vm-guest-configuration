@@ -22,11 +22,11 @@
 
 # 	Install IPOPP Patch #1
 	cp $SOURCE_DIR/DRL-IPOPP_4.1_PATCH_1.tar.gz $INSTALL_DIR/drl
-     	/datadrive/IPOPP/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_1.tar.gz
+     	$INSTALL_DIR/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_1.tar.gz
 
 # Install IPOPP Patch #2
 	cp $SOURCE_DIR/DRL-IPOPP_4.1_PATCH_2.tar.gz $INSTALL_DIR/drl
-	/datadrive/ipopp/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_2.tar.gz
+	$INSTALL_DIR/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_2.tar.gz
 
 # Start Services
 #	su -c "${INSTALL_DIR}/drl/tools/services.sh start" -s /bin/bash adminuser
