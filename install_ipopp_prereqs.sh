@@ -43,7 +43,7 @@ else
 	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_1.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 	azcopy cp "${CONTAINER}DRL-IPOPP_4.1_PATCH_2.tar.gz${SAS_TOKEN}" "$SOURCE_DIR"
 
- 	cp -a /var/lib/waagent/custom-script/download/0/. /datadrive/install_ipopp_prepare.sh
+ 	cp -a /var/lib/waagent/custom-script/download/0/install_ipopp_prepare.sh /datadrive/install_ipopp_prepare.sh
 	sudo chown -R adminuser /datadrive
 	sudo chgrp -R adminuser /datadrive
 
