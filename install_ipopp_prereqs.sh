@@ -12,14 +12,6 @@ else
 	export NOW=$(date '+%Y%m%d-%H:%M:%S')
 	echo "$NOW	IPOPP Prerequisites"
 
-# Get Container destination for software or hard code later on.
-#echo 'Enter Container URI for IPOPP Software:'
-#read CONTAINER
-
-# Get SAS Token for Container
-#echo 'Enter SAS Token for Container:'
-#read SAS_TOKEN
-
 #   Install az copy
 	cd ~
 	curl "https://azcopyvnext.azureedge.net/release20220315/azcopy_linux_amd64_10.14.1.tar.gz" > azcopy_linux_amd64_10.14.1.tar.gz
@@ -38,13 +30,6 @@ else
 	sudo systemctl enable xrdp.service
 	sudo systemctl start xrdp.service
 	sudo systemctl set-default graphical.target
-
-# Ensure mount_drive.sh is run first
-#sudo mkdir -p /nfsdata
-#sudo yum install nfs-utils # [CentOS]
-# sudo apt install nfs-common # [Debian]
-#sudo mount -o sec=sys,vers=3,nolock,proto=tcp saorbital.blob.core.windows.net:/saorbital/ipopp  /nfsdata
-#sudo chown -R `whoami` /nfsdata
 
 #   Download IPOPP Software and Patch. Hard coded Containers and SAS Token
 	export CONTAINER='https://samrw.blob.core.windows.net/ipopp/'
