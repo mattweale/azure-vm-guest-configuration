@@ -29,13 +29,12 @@
 	$INSTALL_DIR/drl/tools/install_patch.sh DRL-IPOPP_4.1_PATCH_2.tar.gz
 
 # Start Services
-#	su -c "${INSTALL_DIR}/drl/tools/services.sh start" -s /bin/bash adminuser
+	$INSTALL_DIR/drl/tools/services.sh start
 
 # Create .netrc file for MODIS Sensor geolocation module requires access to additional ephemeris and attitude ancillary files during processing. These files will be automatically retrieved using EarthData portal login credentials.
+# cp $HOME/drl/SPA/modisl1db/algorithm/DRLshellscripts/sample.netrc $HOME/.netrc
+# Next edit the $HOME/.netrc file to replace “yourlogin” and “yourpassword” with your EarthData portal credentials.
 
 ## Verify
 #	/$INSTALL_DIR/drl/tools/services.sh status > status.log
 #	/$INSTALL_DIR/drl/tools/spa_services.sh status >> status.log
-
-# cp $HOME/drl/SPA/modisl1db/algorithm/DRLshellscripts/sample.netrc $HOME/.netrc
-# Next edit the $HOME/.netrc file to replace “yourlogin” and “yourpassword” with your EarthData portal credentials.
